@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "ESNext",
+    "moduleResolution": "node",
+
+    "rootDir": "./",
+    "outDir": "dist",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+
+    "skipLibCheck": true,
+    "noEmit": false
+  },
+  "include": ["./", "src"]
+}
