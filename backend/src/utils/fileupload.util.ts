@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import cloudinary from "../config/cloudinary.config";
 
-async function uploadFile(file: any, id: string) {
+async function uploadFile(file: any) {
   try {
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
-      public_id: id,
+      public_id: new mongoose.Types.ObjectId().toString(),
     });
     return { public_id: result.public_id, secure_url: result.secure_url };
   } catch (e: any) {

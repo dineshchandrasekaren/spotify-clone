@@ -35,7 +35,7 @@ const SongSchema = new Schema<ISongModel>(
   { timestamps: true }
 );
 
-SongSchema.pre(["findOneAndDelete", "deleteOne"], function () {
+SongSchema.pre("deleteOne", { document: true }, function () {
   const audioUrl = (this as ISongModel).audioUrl;
 });
 const SongModel = model<ISongModel>("songs", SongSchema);
