@@ -7,10 +7,10 @@ import { Router } from "express";
 
 const router = Router();
 
-router.use("auth", auth);
-router.use("user", user);
-router.use("song", song);
-router.use("admin", admin);
-router.use("album", album);
+router.use("/auth", auth);
+router.use("/user", user);
+router.use("/song", song);
+router.use("/admin", admin);
+router.use("/album", album);
 
 export default router;

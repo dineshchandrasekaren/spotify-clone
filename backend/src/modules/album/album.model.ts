@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import type { IAlbumModel } from "./album.type";
+import { CloudinaryUtils } from "../../utils/fileupload.util";
 
 const AlbumSchema = new Schema<IAlbumModel>(
   {
@@ -10,6 +11,9 @@ const AlbumSchema = new Schema<IAlbumModel>(
     artist: {
       type: String,
       required: [true, "artist is required."],
+    },
+    imageUrl: {
+      type: String,
     },
     songs: [
       {
@@ -24,6 +28,9 @@ const AlbumSchema = new Schema<IAlbumModel>(
   },
   { timestamps: true }
 );
-
+AlbumSchema.pre("deleteOne", { document: true }, async function () {
+  const { imageUrl } = this;
+  await CloudinaryUtils.destroyFile(imageUrl);
+});
 const AlbumModel = model<IAlbumModel>("albums", AlbumSchema);
 export default AlbumModel;

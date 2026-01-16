@@ -1,7 +1,14 @@
 export class ResponseHandler {
-  constructor(public data: any, public error: any = null) {}
+  constructor(
+    public data: any,
+    public success: boolean = true,
+    public error: any = undefined
+  ) {}
 }
 
 export class MessageHandler {
-  constructor(public statusCode: number, public message: string) {}
+  constructor(
+    public message: string | object,
+    public success: boolean = false
+  ) {}
 }

@@ -7,13 +7,14 @@ import { clerkMiddleware } from "@clerk/express";
 import { styleLogger } from "./utils/terminal.util";
 import path from "node:path";
 import fileUpload from "express-fileupload";
-const _dirname = path.resolve();
+import { Types } from "mongoose";
+
 const createApp = () => {
   const app = express();
   app.use(express.json());
   app.use(
     cors({
-      origin: "*",
+      origin: "http://localhost:5173",
       credentials: true,
     })
   );
@@ -33,7 +34,7 @@ const createApp = () => {
   app.use(clerkMiddleware());
   app.use(errorHandler);
 
-  app.use("api/", router);
+  app.use("/api", router);
 
   return app;
 };

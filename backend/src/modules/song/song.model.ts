@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import type { ISongModel } from "./song.type";
+import { CloudinaryUtils } from "../../utils/fileupload.util";
 
 const SongSchema = new Schema<ISongModel>(
   {
@@ -35,8 +36,12 @@ const SongSchema = new Schema<ISongModel>(
   { timestamps: true }
 );
 
-SongSchema.pre("deleteOne", { document: true }, function () {
-  const audioUrl = (this as ISongModel).audioUrl;
+SongSchema.pre("deleteOne", { document: true }, async function () {
+  const { audioUrl, imageUrl } = this;
+  await Promise.all([
+    CloudinaryUtils.destroyFile(audioUrl),
+    CloudinaryUtils.destroyFile(imageUrl),
+  ]);
 });
 const SongModel = model<ISongModel>("songs", SongSchema);
 export default SongModel;

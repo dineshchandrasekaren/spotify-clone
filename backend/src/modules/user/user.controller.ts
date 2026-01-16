@@ -1,5 +1,10 @@
+import { getAuth } from "@clerk/express";
 import asynchronous from "../../middlewares/async.middleware";
+import userService from "./user.service";
+import { ResponseHandler } from "../../utils/handler.util";
 
-export const getUser = asynchronous(async (req, res) => {
-  res.status(200).json({ message: "hello from user" });
+export const getAllUser = asynchronous(async (req, res) => {
+  const { userId = "" } = getAuth(req);
+  const user = await userService.getAllUsers(userId || "");
+  res.status(200).json(new ResponseHandler(user));
 });

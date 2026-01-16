@@ -3,7 +3,7 @@ import type { Document, Types } from "mongoose";
 export interface IAlbum {
   title: string;
   artist: string;
-  songs: Types.ObjectId[];
+  songs?: Types.ObjectId[];
   imageUrl: string;
   releaseYear: number;
 }

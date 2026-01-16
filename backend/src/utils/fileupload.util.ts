@@ -1,20 +1,24 @@
 import mongoose from "mongoose";
 import cloudinary from "../config/cloudinary.config";
-
+import path from "node:path";
 async function uploadFile(file: any) {
   try {
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
       public_id: new mongoose.Types.ObjectId().toString(),
+      resource_type: "auto",
     });
-    return { public_id: result.public_id, secure_url: result.secure_url };
+    return { secure_url: result.secure_url };
   } catch (e: any) {
     return { error: e.message, code: e.http_code };
   }
 }
 
-async function destroyFile(public_id: string) {
+async function destroyFile(url: string) {
   try {
-    const result = await cloudinary.uploader.destroy(public_id);
+    let result = path.basename(url)?.split(".")[0];
+    if (result) {
+      result = await cloudinary.uploader.destroy(result);
+    }
 
     return { result };
   } catch (e: any) {

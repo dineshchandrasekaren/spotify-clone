@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import CustomError from "../utils/customError.util";
+import { MessageHandler } from "../utils/handler.util";
 
 // Error handler middleware
 async function errorHandler(
@@ -14,12 +15,10 @@ async function errorHandler(
           success: false,
           errors: { [error.key || "message"]: error.message },
         }
-      : { success: false, message: error.message };
+      : new MessageHandler(error.message);
     return res.status(error.code).json(jsonResponse);
   }
-  return res
-    .status(500)
-    .json({ success: true, message: "Internal server error" });
+  return res.status(500).json(new MessageHandler("Internal Server error"));
 }
 
 export default errorHandler;

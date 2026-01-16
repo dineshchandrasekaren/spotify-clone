@@ -3,6 +3,6 @@ import { saveUserCallBack } from "./auth.controller";
 
 const router = Router();
 
-router.route("/callback").get(saveUserCallBack);
+router.route("/callback").post(saveUserCallBack);
 
 export default router;

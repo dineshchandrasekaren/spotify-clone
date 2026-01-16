@@ -3,7 +3,7 @@ import AlbumModel from "./album.model";
 import type { IAlbum } from "./album.type";
 
 class AlbumRepository {
-  addSong(albumId: ID, songId: ID) {
+  addSongToAlbum(albumId: ID, songId: ID) {
     return AlbumModel.findByIdAndUpdate(
       albumId,
       { $push: { songs: songId } },
@@ -16,6 +16,19 @@ class AlbumRepository {
   }
   createAlbum(album: IAlbum) {
     return AlbumModel.create(album);
+  }
+  deleteAlbum(_id: ID) {
+    return AlbumModel.deleteOne({ _id });
+  }
+  removeSongFromAlbum(albumId: ID, songId: ID) {
+    return AlbumModel.findByIdAndUpdate(
+      albumId,
+      { $pull: { songs: songId } },
+      { new: true }
+    );
+  }
+  getAllAlbum() {
+    return AlbumModel.find();
   }
 }
 

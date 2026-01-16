@@ -4,7 +4,7 @@ import UserRepository from "../user/user.repository";
 import type { IUser } from "../user/user.type";
 
 export default class AuthService {
-  private Repo = new UserRepository();
+  private Repo = UserRepository;
 
   public async checkAndCreateUser(user: IUser) {
     const { fullName, clerkId, email, imageUrl } = user;

@@ -1,13 +1,11 @@
 import UserModel from "./user.model";
 import type { IUser } from "./user.type";
-export default class UserRepository {
-  public async getUserById(id: string) {
-    const user = await UserModel.findOne({ clerkId: id });
-    return user;
+class UserRepository {
+  getUserById(id: string) {
+    return UserModel.findOne({ clerkId: id });
   }
-  public async getUser(user: Partial<IUser>) {
-    const userFound = await UserModel.findOne(user);
-    return userFound;
+  getUser(user: Partial<IUser>) {
+    return UserModel.findOne(user);
   }
   public async checkAndCreateUser(clerkId: string, data: IUser) {
     let user = await this.getUserById(clerkId);
@@ -17,4 +15,9 @@ export default class UserRepository {
     }
     return user;
   }
+  getOtherUsers(id: string) {
+    return UserModel.find({ clerkId: { $ne: id } });
+  }
 }
+
+export default new UserRepository();
