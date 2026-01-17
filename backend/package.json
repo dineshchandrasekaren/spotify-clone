@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "start": "bun index.ts",
-    "dev": "bun --watch ."
+    "dev": "bun --watch .",
+    "seed:song": "bun src/seeds/songs.js",
+    "seed:album": "bun src/seeds/albums.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

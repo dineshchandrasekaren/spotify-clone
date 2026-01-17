@@ -124,3 +124,6 @@
 .flex-center {
   @apply flex justify-center items-center h-screen;
 }
+.navleft .active {
+  @apply bg-zinc-800;
+}
