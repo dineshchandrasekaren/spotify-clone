@@ -1,8 +1,8 @@
 import PlaylistSkeleton from "@/components/skeletons/PlaylistSkeleton";
-import { buttonVariants } from "@/components/ui/button";
-import RoundedCard from "@/components/ui/rounded-card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/shared/ui/button";
+import RoundedCard from "@/shared/ui/rounded-card";
+import { ScrollArea } from "@/shared/ui/scroll-area";
+import { cn } from "@/shared/lib/utils";
 import { Home, Library, MessageCircle } from "lucide-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
@@ -22,7 +22,7 @@ const NavItem = ({
         buttonVariants({
           variant: "ghost",
           className: "text-white hover:bg-zinc-800 w-full justify-start",
-        })
+        }),
       )}
     >
       <Icon className="mr-2 size-5" />{" "}

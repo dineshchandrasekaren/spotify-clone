@@ -1,9 +1,9 @@
-import GoogleAuthButton from "@/features/authentication/google-button.component";
-import { cn } from "@/lib/utils";
+import GoogleAuthButton from "@/features/authentication/components/google-button.component";
+import { cn } from "@/shared/lib/utils";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { LayoutDashboardIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "../../shared/ui/button";
 
 const Header = () => {
   const { user, isLoaded } = useUser();

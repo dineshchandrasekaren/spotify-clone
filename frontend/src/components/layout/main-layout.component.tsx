@@ -3,7 +3,7 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "../ui/resizable";
+} from "../../shared/ui/resizable";
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "./components/left-sidebar.component";
 

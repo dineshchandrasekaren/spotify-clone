@@ -1,4 +1,4 @@
-import http from "@/lib/axios.lib";
+import http from "@/shared/lib/axios.lib";
 import { useAuth } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";

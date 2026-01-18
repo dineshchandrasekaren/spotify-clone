@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import asynchronous from "@/helper/async.helper";
-import http from "@/lib/axios.lib";
+import { Card, CardContent } from "@/shared/ui/card";
+import asynchronous from "@/shared/utils/async.util";
+import http from "@/shared/lib/axios.lib";
 import { useUser } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
 import { useEffect } from "react";
@@ -24,14 +24,14 @@ const AuthCallbackPage = () => {
             imageUrl: user?.imageUrl,
             email: user?.emailAddresses[0].emailAddress,
           },
-          { signal: abortController.signal }
+          { signal: abortController.signal },
         );
         navigate("/");
       },
       (e) => {
         console.log("auth failed", e || "");
         alert("auth failed");
-      }
+      },
     )();
 
     return () => {
