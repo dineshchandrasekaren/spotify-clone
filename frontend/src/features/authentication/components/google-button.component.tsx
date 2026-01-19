@@ -23,7 +23,7 @@ const GoogleAuthButton = () => {
       }}
     >
       <img src="/google.png" alt="google-login logo" className="size-5" />
-      Continue with Google
+      <span className="hidden md:inline">Continue with Google</span>
     </Button>
   );
 };

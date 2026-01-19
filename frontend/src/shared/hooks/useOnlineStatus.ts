@@ -4,15 +4,13 @@ export function useOnlineStatus() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   useEffect(() => {
-    const online = () => setIsOnline(true);
-    const offline = () => setIsOnline(false);
-
-    window.addEventListener("online", online);
-    window.addEventListener("offline", offline);
+    const handler = (status: boolean) => () => setIsOnline(status);
+    window.addEventListener("online", handler(true));
+    window.addEventListener("offline", handler(false));
 
     return () => {
-      window.removeEventListener("online", online);
-      window.removeEventListener("offline", offline);
+      window.removeEventListener("online", handler(true));
+      window.removeEventListener("offline", handler(false));
     };
   }, []);
 

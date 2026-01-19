@@ -3,9 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import AuthCallbackPage from "./features/authentication/auth-callback.page";
 import HomePage from "./pages/home.page";
 import MainLayout from "./components/layout/main-layout.component";
-import Chat from "./features/message/chat.component";
+import Chat from "./pages/chat.page";
 import { useOnlineStatus } from "./shared/hooks/useOnlineStatus";
 import { useEffect, useState } from "react";
+import Album from "./pages/album.page";
 
 function App() {
   const [showStatus, setShowStatus] = useState(false);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="chat" element={<Chat />} />
+          <Route path="albums/:id" element={<Album />} />
         </Route>
         <Route
           path="/sso-callback"

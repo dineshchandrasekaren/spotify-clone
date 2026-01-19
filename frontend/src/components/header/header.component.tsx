@@ -21,8 +21,10 @@ const Header = () => {
           <Link
             to="/admin"
             className={cn(buttonVariants({ variant: "secondary" }))}
+            title="admin dashboard"
           >
-            <LayoutDashboardIcon className="size-4 mr-2" /> Admin Dashboard
+            <LayoutDashboardIcon className="size-4 mr-2" />{" "}
+            <span className="hidden md:inline">Admin Dashboard</span>
           </Link>
         ) : (
           ""

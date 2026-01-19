@@ -5,7 +5,8 @@ import { ScrollArea } from "@/shared/ui/scroll-area";
 import { cn } from "@/shared/lib/utils";
 import { Home, Library, MessageCircle } from "lucide-react";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useAlbums } from "@/features/album/album.query";
 const NavItem = ({
   Icon,
   label = "",
@@ -21,22 +22,25 @@ const NavItem = ({
       className={cn(
         buttonVariants({
           variant: "ghost",
-          className: "text-white hover:bg-zinc-800 w-full justify-start",
+          className:
+            "text-white hover:bg-zinc-800 w-full justify-center md:justify-start",
         }),
       )}
     >
-      <Icon className="mr-2 size-5" />{" "}
+      <Icon className="mr-2 size-5 " />
       <span className="hidden md:inline">{label}</span>
     </NavLink>
   );
 };
 const TitleWithIcon = ({ label, Icon }: { label: string; Icon: any }) => (
-  <div className="flex gap-3 items-end mr-6 mb-4">
-    <Icon className="size-7" />{" "}
+  <div className="flex w-full  gap-3 items-end mr-6 mb-4 mt-1 justify-center md:justify-start">
+    <Icon className="mr-2 size-7 " />
     <h2 className="text-lg font-bold hidden md:inline text-white">{label}</h2>
   </div>
 );
 const LeftSidebar = () => {
+  const { data, isPending } = useAlbums();
+
   return (
     <div className="flex flex-col gap-2">
       {/* nav */}
@@ -50,7 +54,30 @@ const LeftSidebar = () => {
       <RoundedCard>
         <TitleWithIcon Icon={Library} label="Playlists" />
         <ScrollArea className="h-72 ">
-          <PlaylistSkeleton />
+          {isPending ? (
+            <PlaylistSkeleton />
+          ) : (
+            data.map((album: any) => (
+              <Link
+                to={`/albums/${album._id}`}
+                key={album._id}
+                className="p-2 hover:bg-zinc-800 rounded-md flex items-center gap-3 group cursor-pointer"
+              >
+                <img
+                  src={album.imageUrl}
+                  alt="Playlist img"
+                  className="size-12 rounded-md shrink-0 object-cover"
+                />
+
+                <div className="flex-1 min-w-0 hidden md:block">
+                  <p className="font-medium truncate">{album.title}</p>
+                  <p className="text-sm text-zinc-400 truncate">
+                    Album • {album.artist}
+                  </p>
+                </div>
+              </Link>
+            ))
+          )}
         </ScrollArea>
       </RoundedCard>
     </div>

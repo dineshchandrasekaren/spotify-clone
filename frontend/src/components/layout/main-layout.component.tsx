@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -6,19 +5,11 @@ import {
 } from "../../shared/ui/resizable";
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "./components/left-sidebar.component";
+import useMediaQuery from "@/shared/hooks/useMediaQuery";
 
 const MainLayout = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
   return (
     <div className="h-screen bg-black text-white flex flex-col">
       <ResizablePanelGroup

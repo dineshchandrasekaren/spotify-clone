@@ -7,7 +7,9 @@ const RoundedCard = ({
   children: React.ReactNode;
   flex?: number;
 }) => (
-  <div className={`rounded-lg bg-zinc-900 p-4 flex-${flex}`}>{children}</div>
+  <div className={`rounded-lg bg-zinc-900 md:p-4 p-2 flex-${flex}`}>
+    {children}
+  </div>
 );
 
 export default RoundedCard;
