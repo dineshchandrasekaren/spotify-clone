@@ -6,6 +6,7 @@ import {
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "./components/left-sidebar.component";
 import useMediaQuery from "@/shared/hooks/useMediaQuery";
+import FriendsActivity from "./components/friend-activity.component";
 
 const MainLayout = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -42,7 +43,7 @@ const MainLayout = () => {
               maxSize={"25%"}
               collapsedSize={0}
             >
-              {/* <FriendsActivity /> */} dineesh
+              <FriendsActivity />
             </ResizablePanel>
           </>
         )}

@@ -1,3 +1,4 @@
+import SongListSkeleton from "@/components/skeletons/SongListSkeleton";
 import { useAlbum } from "@/features/album/album.query";
 // import { Button } from "@/shared/ui/button";
 import { ScrollArea } from "@/shared/ui/scroll-area";
@@ -7,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 const Album = () => {
   const { id = "" } = useParams();
-  const { isPending, data, isError } = useAlbum(id);
+  const { isLoading, data } = useAlbum(id);
 
   function handlePlayAlbum(
     event: MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -22,7 +23,7 @@ const Album = () => {
         <div className="relative min-h-full">
           {/* bg gradient */}
           <div
-            className="absolute inset-0 bg-gradient-to-b from-[#5038a0]/80 via-zinc-900/80
+            className="absolute inset-0 bg-linear-to-b from-[#5038a0]/80 via-zinc-900/80
 					 to-zinc-900 pointer-events-none"
             aria-hidden="true"
           />
@@ -30,19 +31,36 @@ const Album = () => {
           {/* Content */}
           <div className="relative z-10">
             <div className="flex p-6 gap-6 pb-8">
-              <img
-                src={data?.imageUrl}
-                alt={data?.title}
-                className="w-[240px] h-[240px] shadow-xl rounded"
-              />
+              {isLoading ? (
+                <div className="w-60 h-60 animate-pulse shadow-xl rounded bg-zinc-700"></div>
+              ) : (
+                <img
+                  src={data?.imageUrl}
+                  alt={data?.title}
+                  className="w-60 h-60 shadow-xl rounded"
+                />
+              )}
               <div className="flex flex-col justify-end">
                 <p className="text-sm font-medium">Album</p>
-                <h1 className="text-7xl font-bold my-4">{data?.title}</h1>
-                <div className="flex items-center gap-2 text-sm text-zinc-100">
-                  <span className="font-medium text-white">{data?.artist}</span>
-                  <span>• {data?.songs.length} songs</span>
-                  <span>• {data?.releaseYear}</span>
-                </div>
+                {isLoading ? (
+                  <>
+                    <div className="h-8 w-60 bg-zinc-700 font-bold animate-pulse my-4 " />
+                    <div className="h-8 w-60 bg-zinc-700 font-bold animate-pulse my-4 " />
+                  </>
+                ) : (
+                  <h1 className="text-7xl font-bold my-4">{data?.title}</h1>
+                )}
+                {isLoading ? (
+                  <div className="animate-pulse bg-zinc-700 h-2 rounded-md w-8" />
+                ) : (
+                  <div className="flex items-center gap-2 text-sm  text-zinc-100">
+                    <span className="font-medium text-white">
+                      {data?.artist}
+                    </span>
+                    <span>• {data?.songs.length} songs</span>
+                    <span>• {data?.releaseYear}</span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -81,56 +99,60 @@ const Album = () => {
 
               <div className="px-6">
                 <div className="space-y-2 py-4">
-                  {data?.songs.map((song, index) => {
-                    // const isCurrentSong = currentSong?._id === song._id;
-                    function handlePlaySong(index: any): void {
-                      throw new Error("Function not implemented.");
-                    }
+                  {isLoading ? (
+                    <SongListSkeleton />
+                  ) : (
+                    data?.songs.map((song, index) => {
+                      // const isCurrentSong = currentSong?._id === song._id;
+                      function handlePlaySong(index: any): void {
+                        throw new Error("Function not implemented.");
+                      }
 
-                    return (
-                      <div
-                        key={song._id}
-                        onClick={() => handlePlaySong(index)}
-                        className={`grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 text-sm 
+                      return (
+                        <div
+                          key={song._id}
+                          onClick={() => handlePlaySong(index)}
+                          className={`grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 text-sm 
                       text-zinc-400 hover:bg-white/5 rounded-md group cursor-pointer
                       `}
-                      >
-                        <div className="flex items-center justify-center">
-                          {/* {isCurrentSong && isPlaying ? ( */}
-                          {/* <div className="size-4 text-green-500">♫</div> */}
-                          {/* ) : (
+                        >
+                          <div className="flex items-center justify-center">
+                            {/* {isCurrentSong && isPlaying ? ( */}
+                            {/* <div className="size-4 text-green-500">♫</div> */}
+                            {/* ) : (
                             <span className="group-hover:hidden">
                               {index + 1}
                             </span>
                           )} */}
-                          {/* {!isCurrentSong && ( */}
-                          {/* <Play className="h-4 w-4 hidden group-hover:block" /> */}
-                          {/* )} */}
-                        </div>
+                            {/* {!isCurrentSong && ( */}
+                            {/* <Play className="h-4 w-4 hidden group-hover:block" /> */}
+                            {/* )} */}
+                          </div>
 
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={song.imageUrl}
-                            alt={song.title}
-                            className="size-10"
-                          />
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={song.imageUrl}
+                              alt={song.title}
+                              className="size-10"
+                            />
 
-                          <div>
-                            <div className={`font-medium text-white`}>
-                              {song.title}
+                            <div>
+                              <div className={`font-medium text-white`}>
+                                {song.title}
+                              </div>
+                              <div>{song.artist}</div>
                             </div>
-                            <div>{song.artist}</div>
+                          </div>
+                          <div className="flex items-center">
+                            {song.createdAt.split("T")[0]}
+                          </div>
+                          <div className="flex items-center">
+                            {formatDuration(song.duration)}
                           </div>
                         </div>
-                        <div className="flex items-center">
-                          {song.createdAt.split("T")[0]}
-                        </div>
-                        <div className="flex items-center">
-                          {formatDuration(song.duration)}
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>

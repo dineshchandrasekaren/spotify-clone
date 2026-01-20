@@ -1,4 +1,5 @@
 import axios from "axios";
+export { type AxiosResponse } from "axios";
 const http = axios.create({ baseURL: "http://localhost:5000/api" });
 const waitForClerk = async () => {
   if (window.Clerk?.loaded) return;

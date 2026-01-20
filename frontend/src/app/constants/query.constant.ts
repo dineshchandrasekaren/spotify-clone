@@ -1,5 +1,6 @@
 const QUERYKEY = {
-  album: ["album"],
+  album: ["albums"],
+  user: ["users"],
 };
 
 export default QUERYKEY;

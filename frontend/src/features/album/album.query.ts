@@ -1,16 +1,16 @@
-import QUERYKEY from "@/app/constants/query_key";
-import { useQuery } from "@tanstack/react-query";
+import QUERYKEY from "@/app/constants/query.constant";
 import albumApi from "./album.api";
 import type { Album } from "./album.types";
+import useAuthQuery from "@/shared/hooks/useAuthQuery";
 
 export const useAlbums = () => {
-  return useQuery({
+  return useAuthQuery<Album[]>({
     queryKey: QUERYKEY.album,
     queryFn: albumApi.getAllAlbums,
   });
 };
 export const useAlbum = (id: string) => {
-  return useQuery<Album>({
+  return useAuthQuery<Album>({
     queryKey: [...QUERYKEY.album, id],
     queryFn: () => albumApi.getById(id!),
     enabled: !!id,

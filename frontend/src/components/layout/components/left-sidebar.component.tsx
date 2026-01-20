@@ -4,9 +4,9 @@ import RoundedCard from "@/shared/ui/rounded-card";
 import { ScrollArea } from "@/shared/ui/scroll-area";
 import { cn } from "@/shared/lib/utils";
 import { Home, Library, MessageCircle } from "lucide-react";
-import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAlbums } from "@/features/album/album.query";
+import Typography from "@/shared/ui/typography";
 const NavItem = ({
   Icon,
   label = "",
@@ -39,10 +39,10 @@ const TitleWithIcon = ({ label, Icon }: { label: string; Icon: any }) => (
   </div>
 );
 const LeftSidebar = () => {
-  const { data, isPending } = useAlbums();
+  const { data, isLoading } = useAlbums();
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 h-full">
       {/* nav */}
       <RoundedCard>
         <div className="space-y-4">
@@ -51,13 +51,13 @@ const LeftSidebar = () => {
         </div>
       </RoundedCard>
       {/* playlist */}
-      <RoundedCard>
+      <RoundedCard className="  h-full">
         <TitleWithIcon Icon={Library} label="Playlists" />
-        <ScrollArea className="h-72 ">
-          {isPending ? (
+        <ScrollArea className="h-[calc(100vh-300px)]">
+          {isLoading ? (
             <PlaylistSkeleton />
-          ) : (
-            data.map((album: any) => (
+          ) : data ? (
+            data?.map((album: any) => (
               <Link
                 to={`/albums/${album._id}`}
                 key={album._id}
@@ -77,6 +77,10 @@ const LeftSidebar = () => {
                 </div>
               </Link>
             ))
+          ) : (
+            <Typography.large className="flex-center h-[50vh]! text-center">
+              Please Login to see the playlists
+            </Typography.large>
           )}
         </ScrollArea>
       </RoundedCard>

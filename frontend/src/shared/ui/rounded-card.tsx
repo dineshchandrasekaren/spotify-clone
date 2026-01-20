@@ -2,12 +2,12 @@ import React from "react";
 
 const RoundedCard = ({
   children,
-  flex = 1,
+  className,
 }: {
+  className?: string;
   children: React.ReactNode;
-  flex?: number;
 }) => (
-  <div className={`rounded-lg bg-zinc-900 md:p-4 p-2 flex-${flex}`}>
+  <div className={`rounded-lg  bg-zinc-900 md:p-4 p-2  ${className}`}>
     {children}
   </div>
 );
