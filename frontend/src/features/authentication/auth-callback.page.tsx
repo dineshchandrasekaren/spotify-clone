@@ -1,43 +1,12 @@
 import { Card, CardContent } from "@/shared/ui/card";
-import asynchronous from "@/shared/utils/async.util";
-import http from "@/shared/lib/axios.lib";
-import { useUser } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthCallback } from "./authcallback.hook";
 const AuthCallbackPage = () => {
-  const { user, isLoaded } = useUser();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!isLoaded || !user) return;
-    const abortController = new AbortController();
-
-    asynchronous(
-      async () => {
-        await http.post(
-          "/auth/callback",
-          {
-            id: user?.id,
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            imageUrl: user?.imageUrl,
-            email: user?.emailAddresses[0].emailAddress,
-          },
-          { signal: abortController.signal },
-        );
-        navigate("/");
-      },
-      (e) => {
-        console.log("auth failed", e || "");
-        alert("auth failed");
-      },
-    )();
-
-    return () => {
-      abortController.abort();
-    };
-  }, [user, isLoaded]);
+  useAuthCallback(() => {
+    navigate("/");
+  });
   return (
     <div className="flex-center w-full bg-black">
       <Card className="w-[90%] max-w-md bg-zinc-900 border-zinc-800">

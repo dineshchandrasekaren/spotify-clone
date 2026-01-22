@@ -1,10 +1,11 @@
-import http, { type AxiosResponse } from "@/shared/lib/axios.lib";
+import http from "@/shared/lib/axios.lib";
 import type { User } from "./user.types";
+import ALL_API from "@/shared/apis";
 class UserApi {
   getAllUsers() {
-    return http.get("/user").then((res: AxiosResponse<{ data: User }>) => {
-      return res.data.data;
-    });
+    return http
+      .get<{ data: User }>(ALL_API.user.allUser)
+      .then((res) => res.data.data);
   }
 }
 

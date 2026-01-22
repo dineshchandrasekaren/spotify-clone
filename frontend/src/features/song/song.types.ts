@@ -9,3 +9,8 @@ export interface Song {
   createdAt: string;
   updatedAt: string;
 }
+
+export type SongSpecialRoutes =
+  | "getFeaturedSongs"
+  | "getMadeForYouSongs"
+  | "getTrendingSongs";

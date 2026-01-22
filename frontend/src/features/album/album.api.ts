@@ -1,11 +1,14 @@
 import http from "@/shared/lib/axios.lib";
 import type { Album } from "./album.types";
+import ALL_API from "@/shared/apis";
 type AlbumResponse = { data: Album };
+type AlbumsResponse = { data: Album[] };
 class AlbumApi {
-  api = http<AlbumResponse>;
-  getAllAlbums = () => this.api("/album").then((res) => res.data.data);
+  private readonly api = ALL_API.album;
+  getAllAlbums = () =>
+    http.get<AlbumsResponse>(this.api.allAlbum).then((res) => res.data.data);
   getById = (id: string) =>
-    this.api(`/album/${id}`).then((res) => res.data.data);
+    http.get<AlbumResponse>(this.api.byId(id)).then((res) => res.data.data);
 }
 
 export default new AlbumApi();
